@@ -1,0 +1,21 @@
+{
+  "name": "ts-demo",
+  "version": "1.0.0",
+  "description": "typeScript demo",
+  "main": "index.js",
+  "author": "Aaron Kolatch",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc",
+    "start": "",
+    "dev": "ts-node-dev src/index.ts -watch"
+  },
+  "dependencies": {
+    "typescript": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.11",
+    "ts-node-dev": "^1.1.8"
+  }
+}

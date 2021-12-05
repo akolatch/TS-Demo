@@ -1,0 +1,26 @@
+/node_modules
+yarn-error.log
+/build
+# See https:/help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+todo-ts/node_modules
+todo-ts/.pnp
+todo-ts/.pnp.js
+
+# testing
+todo-ts/coverage
+
+# production
+todo-ts/build
+
+# misc
+todo-ts/.DS_Store
+todo-ts/.env.local
+todo-ts/.env.development.local
+todo-ts/.env.test.local
+todo-ts/.env.production.local
+
+todo-ts/npm-debug.log*
+todo-ts/yarn-debug.log*
+todo-ts/yarn-error.log*
