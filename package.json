@@ -7,14 +7,11 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "tsc",
-    "start": "",
-    "dev": "ts-node-dev src/index.ts -watch"
-  },
-  "dependencies": {
-    "typescript": "^4.5.2"
+    "start": "ts-node-dev src/index.ts",
+    "build": "tsc"
   },
   "devDependencies": {
+    "typescript": "^4.5.2",
     "@types/node": "^16.11.11",
     "ts-node-dev": "^1.1.8"
   }

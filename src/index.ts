@@ -1,81 +1,109 @@
-import { States } from "./constants/states";
-import { ApiData, data } from "./data";
-import { User } from "./types/User";
+import { States } from './constants/states';
+import { ApiData, data } from './data';
+import { User } from './types/User';
 
-let myString = "sting";
+// strings
+let myString = 'sting';
 // myString = 123
 // myString = 'Aharon'
-
-let myName: "Aharon" | "Kolatch";
 
 let myNumber = 123;
-// myString = 123
-// myString = 'Aharon'
+// myNumber = 123
+// myNumber = 'Aharon'
 
-const myArray = [myString];
-// myString.push(myNumber)
+const constantNumber = 10;
 
+// type assignment and unions
+let myName: 'Aharon' | 'Kolatch';
+// myName = "bob"
+// myName = ''
+
+// arrays
+const myArray = [myString, 5];
+myArray.push(myNumber);
+
+const array: (number | string)[] = [];
+
+// objects
 const myOject = {
-    string: myString,
-    number: myNumber,
-    myName: "Aharon",
+  string: myString,
+  number: myNumber,
+  myNam: 'Aharon',
 };
-//  myOject.array = myArray
+//  myOject.myName = myArray
+
+const obj: { [key: string]: string } = {};
+obj.a = 'a';
 
 // functions
-function timesX(base: number, x: number): number {
-    return base * x;
+function timesX(num: number, x: number): number {
+  return num * x;
 }
 
-enum me {
-    FirstName = "Aharon",
-    LastName = "Kolatch",
-    Age = 34,
-    YearsCoding = 2,
+const badBase = '12';
+const num = 2;
+// timesX(num, badBase)
+//test timesX
+
+// Enum the ultimate constant
+enum Status {
+  OK = 200,
+  Created = 201,
+  Accepted = 202,
+  NoContent = 204,
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
+  Error = 500,
+}
+// res.status(Status.OK).json()
+
+// Status.Accepted = 111
+// Status.Sad = 22
+
+//types and interfaces
+type ActionType = 'RESET' | 'ADD_BY' | 'SUB_BY';
+
+interface Action {
+  type: ActionType;
+  payload?: number;
 }
 
-// me.yearsCoding = 3
+const reset = (): Action => {
+  return { type: 'RESET' };
+};
 
-function percentageOfLifeCoding(age: number, yearsCoding: number): string {
-    const percentCoding = ((yearsCoding / age) * 10).toFixed(2);
-    return `I have been coding for ${yearsCoding} years or ${percentCoding} percent of my life`;
-}
+const addBy = (payload: number): Action => {
+  return { type: 'ADD_BY', payload };
+};
 
-const percentCodingMsg = percentageOfLifeCoding(me.Age, me.YearsCoding);
-console.log(percentCodingMsg);
+const reducer = (state: number, action: Action): number => {
+  switch (action.type) {
+    case 'ADD_BY':
+      return state + action.payload!;
+    default:
+      return state;
+  }
+};
 
 // practical TS and why we use it
 
-enum Status {
-    OK = 200,
-    Created = 201,
-    Accepted = 202,
-    NoContent = 204,
-    BadRequest = 400,
-    Unauthorized = 401,
-    NotFound = 404,
-    Error = 500,
+const userData = data;
+
+function format(apiData: ApiData): User {
+  const user = JSON.parse(JSON.stringify(apiData));
+  const homeState = user.address.home.state as keyof typeof States;
+  const homeZipCode = user.address.home.ZipCode;
+
+  user.address.home.state = States[homeState];
+  user.address.home.ZipCode = parseInt(homeZipCode);
+  if (user.address.work?.state) {
+    const workState = user.address.work.state as keyof typeof States;
+    const workZipCode = user.address.work.ZipCode;
+    user.address.work.state = States[workState];
+    user.address.work.ZipCode = parseInt(workZipCode);
+  }
+  return user as User;
 }
 
-// res.status(Status.OK)
-const userData = data 
-
-function formatUsedData (apiData: ApiData): User {
-    const user = {...apiData} as any
-    const homeState = user.address.home.state as keyof typeof States
-    const homeZipCode = user.address.home.ZipCode
-
-    user.address.home.state = States[homeState]
-    user.address.home.ZipCode = parseInt(homeZipCode)
-    if (user.address.work?.state) {
-        const workState = user.address.work.state as keyof typeof States
-        const workZipCode = user.address.work.ZipCode
-        user.address.work.state = States[workState]
-        user.address.work.ZipCode = parseInt(workZipCode)
-    }
-    return user as User
-}
-
-const user = formatUsedData(userData)
-
-console.log(userData)
+console.log(format(userData));
